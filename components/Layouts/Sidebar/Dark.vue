@@ -4,10 +4,12 @@ const store = useStore();
 
 const colorMode = useColorMode();
 
-colorMode.preference = store.isDark ? "dark" : "light";
+// colorMode.preference = store.isDark ? "dark" : "light";
+colorMode.preference = store.isDark ? "light" : "dark";
 
 watch(() => store.isDark, (isDark) => {
-  colorMode.preference = isDark ? "dark" : "light";
+  // colorMode.preference = isDark ? "dark" : "light";
+  colorMode.preference = isDark ? "light" : "dark";
 });
 </script>
 <template>

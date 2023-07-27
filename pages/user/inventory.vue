@@ -1,12 +1,14 @@
 
 <template>
     <div>
+
         <div class="row">
             <div class="col-4"></div>
             <div class="col-4 search text-center mb-3 rounded-pill">
                 <i class="fa fa-search"></i>
-                <input type="text" class="form-control rounded-pill" id="search-input"
-                    placeholder="Search vehicles, models, or keywords">
+                <input v-model="searchInput" class="form-control rounded-pill" id="search-input" placeholder="Search vehicles, models, or keywords">
+                    <!-- <input v-model="searchQuery.filterSearch" @input="handleSearch(searchQuery)"
+                    class="form-control rounded-pill" id="search-input" placeholder="Search vehicles, models, or keywords"> -->
             </div>
 
             <div class="col-4"></div>
@@ -60,6 +62,11 @@
         </div>
         <hr />
         <div class="separator mt-1 mb-10 border-2 border-secondary"></div>
+        <div v-if="loading" class="mb-4" style="display: flex;justify-content: center;">
+            <div class="spinner-border" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
         <div class="row" id="show-list">
             <template v-for="(pageData, pageIndex) in invValue" :key="pageIndex">
                 <template v-for="(result, index) in pageData" :key="index">
@@ -191,14 +198,94 @@
 
     </div>
 </template>
- <script setup>
- const { invValue, fetchInventory } = useInventoryApi();
+<script setup>
+const { invValue, fetchInventory } = useInventoryApi();
 const page = 1;
 const pageLimit = 20;
-await fetch();
-async function fetch() {
-   await fetchInventory(page, pageLimit); 
+const loading = ref(true);
+
+// (async () => {
+//     try {
+//         await fetchInventory(page, pageLimit);
+//         loading.value = false;
+//     } catch (error) {
+//         console.error('Error fetching inventory:', error);
+//         loading.value = false;
+//     }
+// })();
+const searchInput = ref('')
+const searchQuery = reactive({
+    filterSearch: ''
+})
+
+async function fetchFilteredInventory() {
+  loading.value = true
+    try {
+      if(searchInput.value.length > 3) {
+    await fetchInventory(page, pageLimit, searchInput.value);
+      } else {
+    console.log(searchInput.value.length)
+    await fetchInventory(page, pageLimit) 
+  }
+    loading.value = false
+  } catch (error) {
+    console.error(error)
+    loading.value = false
+  }
 }
+watch(searchInput, async (newValue) => {
+loading.value = true
+await fetchFilteredInventory() 
+
+})
+fetchFilteredInventory()
+
+// const handleSearch = async (value) => {
+//     if (value.filterSearch.length > 3) {
+//         console.log(value.filterSearch)
+//         await fetchInventory(page, pageLimit, value.filterSearch)
+//     }
+// }
+// const debounce = (func, delay) => {
+//   let timeoutId
+//   return (...args) => {
+//     clearTimeout(timeoutId)
+//     timeoutId = setTimeout(() => {
+//       func(...args)
+//     }, delay)
+//   }
+// }
+// const debouncedSearch = debounce(async (query) => {
+
+//     loading.value = true
+//     try {
+//         await fetchInventory(page, pageLimit, query)
+//     } catch (error) {
+//         console.error(error)
+//     }
+
+//     loading.value = false
+
+// }, 300)
+// const handleSearch = (query) => {
+//     query= query.filterSearch 
+//   debouncedSearch(query) 
+// }
+const menuOpen = ref(false)
+
+function toggleMenu() {
+    menuOpen.value = !menuOpen.value
+}
+// const page = 1;
+// const pageLimit = 20;
+// await fetch();
+// async function fetch() {
+//     await fetchInventory(page, pageLimit);
+// }
+// const fetchData = async (page, pageLimit) => {
+//     await fetchInventory(page, pageLimit);
+// };
+// fetchData();
 
 // const invValueData = useAsyncData(async () => {
 //     const { fetchInventory } = useInventoryApi();
@@ -219,11 +306,7 @@ async function fetch() {
 // const invValue = allInventoryData();
 // const invValue = ref([]);
 // let currentPage = 1;
-const menuOpen = ref(false)
 
-function toggleMenu() {
-    menuOpen.value = !menuOpen.value
-}
 
 
 
