@@ -6,60 +6,147 @@
             <div class="col-4"></div>
             <div class="col-4 search text-center mb-3 rounded-pill">
                 <i class="fa fa-search"></i>
-                <input v-model="searchInput" class="form-control rounded-pill" id="search-input" placeholder="Search vehicles, models, or keywords">
-                    <!-- <input v-model="searchQuery.filterSearch" @input="handleSearch(searchQuery)"
+                <input v-model="searchInput" class="form-control rounded-pill" id="search-input"
+                    placeholder="Search vehicles, models, or keywords">
+                <!-- <input v-model="searchQuery.filterSearch" @input="handleSearch(searchQuery)"
                     class="form-control rounded-pill" id="search-input" placeholder="Search vehicles, models, or keywords"> -->
             </div>
 
             <div class="col-4"></div>
+
         </div>
-        <p class="show menu-dropdown" :class="{ 'menu-open': menuOpen }" @click="toggleMenu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M4.55995 7.3275L4.68745 7.8C4.80745 8.2275 4.47746 8.6475 4.03496 8.6475H2.87996C2.29496 8.6475 1.82996 8.1825 1.82996 7.605C1.82996 7.0275 2.30246 6.5625 2.87996 6.5625H3.54746C4.01996 6.5625 4.43995 6.8775 4.55995 7.335V7.3275Z"
-                    stroke="#272727" stroke-linecap="round"></path>
-                <path
-                    d="M19.4473 7.3275L19.3198 7.8C19.1998 8.2275 19.5298 8.6475 19.9723 8.6475H21.1273C21.7123 8.6475 22.1773 8.1825 22.1773 7.605C22.1773 7.0275 21.7048 6.5625 21.1273 6.5625H20.4598C19.9873 6.5625 19.5673 6.8775 19.4473 7.335V7.3275Z"
-                    stroke="#272727" stroke-linecap="round"></path>
-                <path
-                    d="M2.26501 12.54C2.26501 10.5 4.33501 7.785 7.13251 7.785H16.8675C19.305 7.785 21.735 9.825 21.735 12.54V15.9375V16.8975C21.735 17.865 20.94 18.6525 19.965 18.6525H4.03501C3.06001 18.6525 2.26501 17.865 2.26501 16.8975V12.54V12.54Z"
-                    stroke="#272727" stroke-linejoin="round"></path>
-                <path
-                    d="M4.88245 7.995C4.88245 4.8525 6.49495 1.935 8.28745 1.935H15.4574C17.2499 1.935 19.0424 4.275 19.0424 7.995"
-                    stroke="#272727" stroke-linejoin="round"></path>
-                <path
-                    d="M6.68982 19.0725V18.3225C6.68982 17.355 7.48481 16.5675 8.45981 16.5675H15.5398C16.5148 16.5675 17.3098 17.355 17.3098 18.3225V19.0725"
-                    stroke="#272727"></path>
-                <path
-                    d="M3.14966 18.4875V21.18C3.14966 21.7125 3.54716 22.14 4.03466 22.14H5.80466C6.29216 22.14 6.68966 21.7125 6.68966 21.18V18.4875"
-                    stroke="#272727"></path>
-                <path
-                    d="M17.3171 18.6525V21.2625C17.3171 21.75 17.7146 22.14 18.2021 22.14H19.9721C20.4596 22.14 20.8571 21.75 20.8571 21.2625V18.6525"
-                    stroke="#272727"></path>
-                <path
-                    d="M4.92004 12.5925C4.92004 12.045 5.41504 11.6325 5.96254 11.73L7.73254 12.045C8.15254 12.12 8.46004 12.4875 8.46004 12.9075V13.1775C8.46004 13.665 8.06254 14.055 7.57504 14.055H5.80504C5.31754 14.055 4.92004 13.665 4.92004 13.1775V12.6V12.5925Z"
-                    stroke="#272727"></path>
-                <path
-                    d="M18.645 12.5925C18.645 12.045 18.15 11.6325 17.6025 11.73L15.8325 12.045C15.4125 12.12 15.105 12.4875 15.105 12.9075V13.1775C15.105 13.665 15.5025 14.055 15.99 14.055H17.76C18.2475 14.055 18.645 13.665 18.645 13.1775V12.6V12.5925Z"
-                    stroke="#272727"></path>
-            </svg>
-            <span class="ms-2">Make &amp; model</span>
-        </p>
-        <div v-if="menuOpen" class="menu menu-sub menu-sub-dropdown w-1000px p-10 mt-10 car-make-model" data-kt-menu="true"
-            id="kt-toolbar-filter">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="form-check col-3 mb-5">
-                            <input class="form-check-input" type="checkbox" value="asdfasfa" id="car_make" />
-                            <label class="form-check-label" for="car_make">
-                                AB
-                            </label>
+        <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1 mb-5" id="kt_app_header_wrapper">
+            <div>
+                <Province @update-province="handleProvince" />
+            </div>
+
+            <div>
+                <p class="show menu-dropdown" :class="{ 'menu-open': menuOpen }" @click="toggleMenu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M4.55995 7.3275L4.68745 7.8C4.80745 8.2275 4.47746 8.6475 4.03496 8.6475H2.87996C2.29496 8.6475 1.82996 8.1825 1.82996 7.605C1.82996 7.0275 2.30246 6.5625 2.87996 6.5625H3.54746C4.01996 6.5625 4.43995 6.8775 4.55995 7.335V7.3275Z"
+                            stroke="#272727" stroke-linecap="round"></path>
+                        <path
+                            d="M19.4473 7.3275L19.3198 7.8C19.1998 8.2275 19.5298 8.6475 19.9723 8.6475H21.1273C21.7123 8.6475 22.1773 8.1825 22.1773 7.605C22.1773 7.0275 21.7048 6.5625 21.1273 6.5625H20.4598C19.9873 6.5625 19.5673 6.8775 19.4473 7.335V7.3275Z"
+                            stroke="#272727" stroke-linecap="round"></path>
+                        <path
+                            d="M2.26501 12.54C2.26501 10.5 4.33501 7.785 7.13251 7.785H16.8675C19.305 7.785 21.735 9.825 21.735 12.54V15.9375V16.8975C21.735 17.865 20.94 18.6525 19.965 18.6525H4.03501C3.06001 18.6525 2.26501 17.865 2.26501 16.8975V12.54V12.54Z"
+                            stroke="#272727" stroke-linejoin="round"></path>
+                        <path
+                            d="M4.88245 7.995C4.88245 4.8525 6.49495 1.935 8.28745 1.935H15.4574C17.2499 1.935 19.0424 4.275 19.0424 7.995"
+                            stroke="#272727" stroke-linejoin="round"></path>
+                        <path
+                            d="M6.68982 19.0725V18.3225C6.68982 17.355 7.48481 16.5675 8.45981 16.5675H15.5398C16.5148 16.5675 17.3098 17.355 17.3098 18.3225V19.0725"
+                            stroke="#272727"></path>
+                        <path
+                            d="M3.14966 18.4875V21.18C3.14966 21.7125 3.54716 22.14 4.03466 22.14H5.80466C6.29216 22.14 6.68966 21.7125 6.68966 21.18V18.4875"
+                            stroke="#272727"></path>
+                        <path
+                            d="M17.3171 18.6525V21.2625C17.3171 21.75 17.7146 22.14 18.2021 22.14H19.9721C20.4596 22.14 20.8571 21.75 20.8571 21.2625V18.6525"
+                            stroke="#272727"></path>
+                        <path
+                            d="M4.92004 12.5925C4.92004 12.045 5.41504 11.6325 5.96254 11.73L7.73254 12.045C8.15254 12.12 8.46004 12.4875 8.46004 12.9075V13.1775C8.46004 13.665 8.06254 14.055 7.57504 14.055H5.80504C5.31754 14.055 4.92004 13.665 4.92004 13.1775V12.6V12.5925Z"
+                            stroke="#272727"></path>
+                        <path
+                            d="M18.645 12.5925C18.645 12.045 18.15 11.6325 17.6025 11.73L15.8325 12.045C15.4125 12.12 15.105 12.4875 15.105 12.9075V13.1775C15.105 13.665 15.5025 14.055 15.99 14.055H17.76C18.2475 14.055 18.645 13.665 18.645 13.1775V12.6V12.5925Z"
+                            stroke="#272727"></path>
+                    </svg>
+                    <span class="ms-2">Make &amp; model</span>
+                </p>
+                <div v-if="menuOpen" class="menu menu-sub menu-sub-dropdown w-1000px p-10 mt-10 car-make-model"
+                    data-kt-menu="true" id="kt-toolbar-filter">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-check col-3 mb-5">
+                                    <input class="form-check-input" type="checkbox" value="asdfasfa" id="car_make" />
+                                    <label class="form-check-label" for="car_make">
+                                        AB
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--  <div>
+                <ComponentA />
+            </div>
+            <div>
+                <ComponentB />
+            </div> -->
+            <div>
+                <PriceRange @update-price="handlePriceChange" />
+            </div>
+            <div>
+                <BodyType />
+            </div>
+            <div>
+                <YearMilage />
+            </div>
+            <div>
+                <Morefilter @colorClick="handleColorClick" @seatClick="handleSeatClick"
+                    @transmissionClick="handleTransmissionClick" @fuelTypeClick="handlefuelTypeClick"
+                    @drivetrainClick="handledrivetrainClick" @cylinderClick="handlecylinderClick" />
+                <!-- <Morefilter :setSelectedColor="color => child.selectedColor = color"
+                    :setSelectedSeats="seats => child.selectedSeats = seats" /> -->
+            </div>
+            <!-- <div class="sc-kpHvgf gCMaXe">
+                <p class="dropdown-toggle show menu-dropdown" :class="{ 'menu-open': openyear }" @click="toggleYear">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M18.6602 12.21L16.6277 2.59499C16.5377 2.18249 16.1852 1.88999 15.7727 1.88999H6.67519C6.27769 1.88999 5.9252 2.16749 5.8277 2.57249L1.8977 18.72C1.7627 19.29 2.1752 19.8375 2.7452 19.8375H13.4252"
+                            stroke="#272727"></path>
+                        <path d="M9.04469 1.8975L5.54968 19.845" stroke="#272727"></path>
+                        <path d="M13.4176 1.8975L15.6001 12.6675" stroke="#272727"></path>
+                        <path d="M11.2352 7.2825V9.525" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path d="M11.2352 2.3475V4.59" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path d="M11.2352 17.145V19.3875" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path d="M11.2352 12.21V14.4525" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path d="M17.3477 14.46V17.475L18.6602 18.9525" stroke="#272727" stroke-linecap="round"></path>
+                        <path
+                            d="M17.3475 22.08C20.0027 22.08 22.155 19.8705 22.155 17.145C22.155 14.4195 20.0027 12.21 17.3475 12.21C14.6924 12.21 12.54 14.4195 12.54 17.145C12.54 19.8705 14.6924 22.08 17.3475 22.08Z"
+                            stroke="#272727"></path>
+                    </svg>
+                    <span class="ms-2">Year &amp; Mileage</span>
+                </p>
+                <YearMilage v-if="openyear" />
+            </div> -->
+            <!-- <div class="sc-kpHvgf gCMaXe">
+                <p class="dropdown-toggle show menu-dropdown" :class="{ 'menu-open': open }" @click="toggle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.08789 22.1475V14.475" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path d="M4.08789 9.81V1.8975" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path d="M12.0154 22.1475V8.49001" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path d="M12.0154 3.66V1.8975" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path d="M19.9352 22.1475V17.955" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path d="M19.9352 13.3275V1.8975" stroke="#272727" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                        <path
+                            d="M4.08763 14.205C5.30128 14.205 6.28514 13.2211 6.28514 12.0075C6.28514 10.7939 5.30128 9.81 4.08763 9.81C2.87399 9.81 1.89014 10.7939 1.89014 12.0075C1.89014 13.2211 2.87399 14.205 4.08763 14.205Z"
+                            stroke="#272727"></path>
+                        <path
+                            d="M12.0151 8.48999C13.2288 8.48999 14.2126 7.50614 14.2126 6.29249C14.2126 5.07885 13.2288 4.09499 12.0151 4.09499C10.8015 4.09499 9.81763 5.07885 9.81763 6.29249C9.81763 7.50614 10.8015 8.48999 12.0151 8.48999Z"
+                            stroke="#272727"></path>
+                        <path
+                            d="M19.9354 17.7225C21.1491 17.7225 22.1329 16.7386 22.1329 15.525C22.1329 14.3114 21.1491 13.3275 19.9354 13.3275C18.7218 13.3275 17.7379 14.3114 17.7379 15.525C17.7379 16.7386 18.7218 17.7225 19.9354 17.7225Z"
+                            stroke="#272727"></path>
+                    </svg>
+                    <span>More Filters</span>
+                </p>
+                <Morefilter v-if="open" />
+            </div>  -->
         </div>
+
         <hr />
         <div class="separator mt-1 mb-10 border-2 border-secondary"></div>
         <div v-if="loading" class="mb-4" style="display: flex;justify-content: center;">
@@ -199,11 +286,13 @@
     </div>
 </template>
 <script setup>
-const { invValue, fetchInventory } = useInventoryApi();
+const { invValue, filtersApplied, fetchInventory } = useInventoryApi();
 const page = 1;
 const pageLimit = 20;
 const loading = ref(true);
-
+// const route = useRoute()
+// const currentPage = route.path
+// console.log('path', currentPage)
 // (async () => {
 //     try {
 //         await fetchInventory(page, pageLimit);
@@ -213,69 +302,145 @@ const loading = ref(true);
 //         loading.value = false;
 //     }
 // })();
-const searchInput = ref('')
 const searchQuery = reactive({
     filterSearch: ''
 })
 
-async function fetchFilteredInventory() {
-  loading.value = true
-    try {
-      if(searchInput.value.length > 3) {
-    await fetchInventory(page, pageLimit, searchInput.value);
-      } else {
-    console.log(searchInput.value.length)
-    await fetchInventory(page, pageLimit) 
-  }
-    loading.value = false
-  } catch (error) {
-    console.error(error)
-    loading.value = false
-  }
-}
-watch(searchInput, async (newValue) => {
-loading.value = true
-await fetchFilteredInventory() 
+const searchInput = ref('')
 
+async function fetchFilteredInventory() {
+    loading.value = true
+    try {
+        
+            const filters = ({
+                'searchInput': searchInput.value,
+                'minPrice': priceRange.value.min,
+                'maxPrice': priceRange.value.max,
+                'province': provinceChange.value,
+                'exteriorColor': exteriorColorSelected.value,
+                'transmission': transmissionSelected.value,
+                'carseat': seatSelected.value,
+                'fuelType': fuelTypeSelected.value,
+                'drivetrain': drivetrainSelected.value,
+            })
+            await fetchInventory(page, pageLimit, filters);
+        
+            // await fetchInventory(page, pageLimit);
+        
+        loading.value = false
+    } catch (error) {
+        console.error(error)
+        loading.value = false
+    }
+}
+
+
+// watch(searchInput, async (newValue) => {
+//     loading.value = true
+//     await fetchFilteredInventory()
+// })
+
+// watch(priceRange, async (newValue) => {
+//     loading.value = true
+//     await fetchFilteredInventory()
+// })
+
+// watch(provinceChange, async (newValue) => {
+//     loading.value = true
+//     await fetchFilteredInventory()
+// })
+
+
+//for child pricechange
+const priceRange = ref({
+    min: null,
+    max: null
 })
+function handlePriceChange(price) {
+    priceRange.value = price
+}
+
+//for child provincechange
+const provinceChange = ref('')
+const handleProvince = (selectedProvince) => {
+    provinceChange.value = selectedProvince;
+};
+
+//for child colorselect
+const exteriorColorSelected = ref([]);
+const handleColorClick = (colorName) => {
+    exteriorColorSelected.value = colorName.selectedString
+    //   console.log("color", exteriorColorSelected.value);
+};
+
+//for child seatselect
+const seatSelected = ref([]);
+const handleSeatClick = (seatName) => {
+    seatSelected.value = seatName;
+    console.log(seatSelected.value)
+};
+
+//for child transmission change
+const transmissionSelected = ref('');
+const handleTransmissionClick = (transmissionName) => {
+    transmissionSelected.value = transmissionName.selectedString
+    console.log(transmissionSelected.value)
+}
+//for child fueltype change
+const fuelTypeSelected = ref('')
+const handlefuelTypeClick = (fueltypeName) => {
+    fuelTypeSelected.value = fueltypeName.selectedString
+    console.log(fuelTypeSelected.value)
+}
+
+//for child drivetrain change
+const drivetrainSelected = ref('')
+const handledrivetrainClick = (drivetrainName) => {
+    drivetrainSelected.value = drivetrainName.selectedString
+    console.log(drivetrainSelected.value)
+}
+//for child cylenders change 
+const cylinderSelected = ref('')
+const handlecylinderClick = (cylinderName) => {
+    cylinderSelected.value = cylinderName.selectedString
+    console.log(cylinderSelected.value)
+}
+watch([searchInput,priceRange, provinceChange, exteriorColorSelected, seatSelected, transmissionSelected, fuelTypeSelected, drivetrainSelected, cylinderSelected,], async () => {
+    loading.value = true
+    if(provinceChange.value == '')
+    {
+    filtersApplied.value = false
+    }else{
+    filtersApplied.value = true
+    }
+    await fetchFilteredInventory();
+});
 fetchFilteredInventory()
 
-// const handleSearch = async (value) => {
-//     if (value.filterSearch.length > 3) {
-//         console.log(value.filterSearch)
-//         await fetchInventory(page, pageLimit, value.filterSearch)
-//     }
-// }
-// const debounce = (func, delay) => {
-//   let timeoutId
-//   return (...args) => {
-//     clearTimeout(timeoutId)
-//     timeoutId = setTimeout(() => {
-//       func(...args)
-//     }, delay)
-//   }
-// }
-// const debouncedSearch = debounce(async (query) => {
 
-//     loading.value = true
-//     try {
-//         await fetchInventory(page, pageLimit, query)
-//     } catch (error) {
-//         console.error(error)
-//     }
 
-//     loading.value = false
+onMounted(() => {
+    document.addEventListener('click', handleOutsideClick)
+})
 
-// }, 300)
-// const handleSearch = (query) => {
-//     query= query.filterSearch 
-//   debouncedSearch(query) 
-// }
+onUnmounted(() => {
+    document.removeEventListener('click', handleOutsideClick)
+})
+
+const handleOutsideClick = (e) => {
+    if (!e.target.closest('.menu')) {
+        closeMenu()
+    }
+}
+
+
 const menuOpen = ref(false)
 
 function toggleMenu() {
     menuOpen.value = !menuOpen.value
 }
+
+
 // const page = 1;
 // const pageLimit = 20;
 // await fetch();
